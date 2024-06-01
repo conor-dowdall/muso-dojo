@@ -1,4 +1,4 @@
-class MDButtonWithState extends HTMLButtonElement {
+class MDButtonWithState extends HTMLElement {
   #inactive = false;
   #eventType = "md-change-me";
 
@@ -8,7 +8,6 @@ class MDButtonWithState extends HTMLButtonElement {
 
   constructor() {
     super();
-    this.type = "button";
     /** add event listener by default and remove if inactive attribute is present */
     this.addEventListener("click", this.dispatchCustomEvent);
   }
@@ -49,13 +48,10 @@ class MDButtonWithState extends HTMLButtonElement {
   }
 
   dispatchCustomEvent() {
-    console.log(this.eventType);
     this.dispatchEvent(new CustomEvent(this.eventType));
   }
 }
 
-customElements.define("md-button-with-state", MDButtonWithState, {
-  extends: "button",
-});
+customElements.define("md-button-with-state", MDButtonWithState);
 
 export default MDButtonWithState;
