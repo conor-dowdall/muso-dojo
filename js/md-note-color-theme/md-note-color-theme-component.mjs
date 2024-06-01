@@ -59,6 +59,7 @@ template.innerHTML = /* HTML */ `
     #controls-wrapper {
       display: flex;
       justify-content: end;
+
       > md-save-button {
         width: var(--_menu-button-size);
         height: var(--_menu-button-size);
