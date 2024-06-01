@@ -1,5 +1,6 @@
 import MD_NOTE_LABEL_THEMES from "../md-note-label/md-note-label-themes.mjs";
 import { mdAttributeToBoolean } from "../md-utilities/md-general-utilities.mjs";
+import MDSaveButtonWithState from "../md-element/md-save-button-with-state.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
@@ -25,11 +26,13 @@ template.innerHTML = /* HTML */ `
       display: flex;
       flex-flow: row wrap;
       gap: 0.5em;
+
       > .note-color-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
         row-gap: 0.1em;
+
         > [id|="note-color-input"] {
           width: 2.5em;
           height: 2.5em;
@@ -37,17 +40,29 @@ template.innerHTML = /* HTML */ `
       }
     }
 
-    #relative-input {
-      ~ #relative-info::after {
-        content: "colors are assigned to fixed notes";
+    #relative-wrapper {
+      > #relative-input {
+        ~ #relative-info::after {
+          content: "colors are assigned to fixed notes";
+        }
+
+        &:checked ~ #relative-info::after {
+          content: "colors are assigned relative to the root note";
+        }
       }
-      &:checked ~ #relative-info::after {
-        content: "colors are assigned relative to the root note";
+
+      > #relative-info {
+        margin: 0.2em 0 0 0;
       }
     }
 
-    #relative-info {
-      margin: 0.2em 0 0 0;
+    #controls-wrapper {
+      display: flex;
+      justify-content: end;
+      > md-save-button {
+        width: var(--_menu-button-size);
+        height: var(--_menu-button-size);
+      }
     }
 
     #interaction-blocking-div {
@@ -127,6 +142,10 @@ template.innerHTML = /* HTML */ `
     <p id="relative-info"></p>
   </div>
 
+  <div id="controls-wrapper">
+    <md-save-button-with-state inactive></md-save-button-with-state>
+  </div>
+
   <div id="interaction-blocking-div"></div>
 `;
 
@@ -182,10 +201,11 @@ class MDNoteColorThemeComponent extends HTMLElement {
   /** @param {boolean} value - allow the notes to be enabled/disabled and the colors to be chosen (default = false) */
   set #editable(value) {
     const inputsDisabled = !value;
-    const blockingDivDisplay = value ? "none" : "block";
     this.shadowRoot
       .querySelectorAll("input")
       .forEach((element) => (element.disabled = inputsDisabled));
+
+    const blockingDivDisplay = value ? "none" : "block";
     this.shadowRoot.getElementById("interaction-blocking-div").style.display =
       blockingDivDisplay;
   }
