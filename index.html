@@ -11,11 +11,6 @@
     <title>Muso Dojo | Fretboard</title>
     <style>
       @font-face {
-        font-family: "Stick";
-        src: url("/fonts/Stick-Regular.ttf");
-      }
-
-      @font-face {
         font-family: "Edwin Roman";
         src: url("/fonts/Edwin-Roman.otf");
       }
@@ -27,13 +22,24 @@
       body {
         font-family: "Edwin Roman";
       }
+
+      header {
+        text-align: center;
+      }
     </style>
   </head>
 
   <body>
     <header>
-      <md-header></md-header>
+      <picture>
+        <source
+          srcset="/images/md-header-dark.png"
+          media="(prefers-color-scheme: dark)"
+        />
+        <img src="/images/md-header-light.png" alt="header" />
+      </picture>
     </header>
+
     <md-fretboard-multitool></md-fretboard-multitool>
   </body>
 </html>
