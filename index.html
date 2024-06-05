@@ -7,6 +7,15 @@
     <style>
       :root {
         color-scheme: dark light;
+        --md-text-bg-color: white;
+        --md-text-color: black;
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --md-text-bg-color: black;
+          --md-text-color: white;
+        }
       }
 
       body {
@@ -17,23 +26,21 @@
 
       header {
         text-align: center;
+        margin-block: 2em;
       }
 
       main {
         text-align: center;
       }
 
-      div.links {
-        margin-block: 2em;
-      }
-
       a {
+        display: inline-block;
         font-size: 2em;
-        color: black;
+        background-color: var(--md-text-bg-color);
+        color: var(--md-text-color);
         text-decoration: none;
         padding: 0.5em 1em;
         border-radius: 1000vw;
-        background-color: white;
       }
     </style>
   </head>
