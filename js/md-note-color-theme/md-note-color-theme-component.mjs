@@ -144,13 +144,14 @@ template.innerHTML = /* HTML */ `
   </div>
 
   <div id="controls-wrapper">
-    <md-save-button-with-state inactive></md-save-button-with-state>
+    <md-save-button-with-state></md-save-button-with-state>
   </div>
 
   <div id="interaction-blocking-div"></div>
 `;
 
 class MDNoteColorThemeComponent extends HTMLElement {
+  /** @type {import("./md-note-color-themes.mjs").MDNoteColorTheme}*/
   #mdNoteColorTheme;
 
   static get observedAttributes() {
@@ -160,12 +161,21 @@ class MDNoteColorThemeComponent extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+
     this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+    // the theme component is not editable, by default
+    this.#editable = false;
+
     this.shadowRoot
       .getElementById("relative-input")
       .addEventListener("change", (event) =>
         this.#handleRelativeChecked(event)
       );
+
+    this.shadowRoot
+      .querySelector("md-save-button-with-state")
+      .addEventListener("click", () => this.#saveTheme());
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -179,6 +189,16 @@ class MDNoteColorThemeComponent extends HTMLElement {
       default:
         console.warn("Unrecognized attribute name.");
     }
+  }
+
+  #saveTheme() {
+    /** @type {import("./md-note-color-themes.mjs").MDNoteColorTheme}*/
+    const theme = {
+      name: this.name,
+      relative: this.relative,
+      colors: this.colors,
+    };
+    console.log(theme);
   }
 
   #handleRelativeChecked(event) {
@@ -202,13 +222,17 @@ class MDNoteColorThemeComponent extends HTMLElement {
   /** @param {boolean} value - allow the notes to be enabled/disabled and the colors to be chosen (default = false) */
   set #editable(value) {
     const inputsDisabled = !value;
+
     this.shadowRoot
       .querySelectorAll("input")
       .forEach((element) => (element.disabled = inputsDisabled));
 
-    const blockingDivDisplay = value ? "none" : "block";
     this.shadowRoot.getElementById("interaction-blocking-div").style.display =
-      blockingDivDisplay;
+      value ? "none" : "block";
+
+    this.shadowRoot.getElementById("controls-wrapper").style.display = value
+      ? "flex"
+      : "none";
   }
 
   /** @returns {boolean} does this component use a "New Theme" template/look (default = false) */
@@ -262,7 +286,7 @@ class MDNoteColorThemeComponent extends HTMLElement {
     return this.#mdNoteColorTheme;
   }
 
-  /** @param {import("./md-note-color-themes.mjs").MDNoteColorTheme} [mdNoteColorTheme] - a valid MDNoteColorTheme */
+  /** @param {import("./md-note-color-themes.mjs").MDNoteColorTheme} value - a valid MDNoteColorTheme */
   set mdNoteColorTheme(value) {
     this.#mdNoteColorTheme = value;
 
@@ -309,6 +333,20 @@ class MDNoteColorThemeComponent extends HTMLElement {
 
   get name() {
     return this.#mdNoteColorTheme ? this.#mdNoteColorTheme.name : "New Theme";
+  }
+
+  get relative() {
+    return this.shadowRoot.getElementById("relative-input").checked;
+  }
+
+  get colors() {
+    const colors = new Array(12);
+    this.shadowRoot
+      .querySelectorAll('[id|="note-color-input"]')
+      .forEach((noteColorInput, i) => {
+        colors[i] = noteColorInput.value;
+      });
+    return colors;
   }
 }
 
