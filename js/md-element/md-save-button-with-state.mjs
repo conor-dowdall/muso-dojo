@@ -27,10 +27,6 @@ class MDSaveButtonWithState extends MDButtonWithState {
     super();
     this.appendChild(template.content.cloneNode(true));
   }
-
-  connectedCallback() {
-    this.eventType = "md-save";
-  }
 }
 
 customElements.define("md-save-button-with-state", MDSaveButtonWithState);
