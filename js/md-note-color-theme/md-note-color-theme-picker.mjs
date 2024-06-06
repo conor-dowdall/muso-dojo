@@ -13,22 +13,27 @@ template.innerHTML = /* HTML */ `
       justify-content: center;
       column-gap: 2em;
       margin-block-end: 4em;
+
       > .note-color-radio-input-wrapper {
         display: flex;
         flex-direction: row;
         column-gap: 0.5em;
+
         > #note-color-radio-input-none + label {
           line-height: var(--_menu-button-size-large);
         }
+
         > #note-color-radio-input-color {
           + label {
             width: var(--_menu-button-size-large);
             height: var(--_menu-button-size-large);
+
             > #note-color-color-input {
               width: 100%;
               height: 100%;
             }
           }
+
           &:not(:checked) + label #note-color-color-input {
             pointer-events: none;
           }
@@ -42,6 +47,7 @@ template.innerHTML = /* HTML */ `
       text-align: center;
       align-items: center;
       row-gap: 1.5em;
+
       & md-add-to-list-button {
         display: block;
         margin-inline: auto;
@@ -57,10 +63,12 @@ template.innerHTML = /* HTML */ `
         border: 0.1em solid;
         border-radius: 1em;
         padding: 1em;
+
         &:hover {
           background-color: color-mix(in srgb, currentcolor 8%, transparent);
         }
       }
+
       > input:checked + label {
         background-color: color-mix(in srgb, currentcolor 15%, transparent);
       }
