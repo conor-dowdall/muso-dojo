@@ -1,17 +1,14 @@
 // @ts-check
 import MD_NOTE_LABEL_THEMES from "../md-note-label/md-note-label-themes.mjs";
 import { mdAttributeToBoolean } from "../md-utilities/md-general-utilities.mjs";
-import MDSaveButtonWithState from "../md-element/md-save-button-with-state.mjs";
+import "../md-element/md-save-button-with-state.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
   <style>
     :host {
       position: relative;
-      display: flex;
-      flex-direction: column;
-      row-gap: 1em;
-      text-align: center;
+      display: block;
     }
 
     :host([editable]) input[type="checkbox"] {
@@ -20,7 +17,7 @@ template.innerHTML = /* HTML */ `
     }
 
     #name-heading {
-      margin: 0;
+      margin: 0 0 0.5em 0;
     }
 
     #note-colors-wrapper {
@@ -38,32 +35,6 @@ template.innerHTML = /* HTML */ `
           width: 2.5em;
           height: 2.5em;
         }
-      }
-    }
-
-    #relative-wrapper {
-      > #relative-input {
-        ~ #relative-info::after {
-          content: "colors are assigned to fixed notes";
-        }
-
-        &:checked ~ #relative-info::after {
-          content: "colors are assigned relative to the root note";
-        }
-      }
-
-      > #relative-info {
-        margin: 0.2em 0 0 0;
-      }
-    }
-
-    #controls-wrapper {
-      display: flex;
-      justify-content: end;
-
-      > md-save-button {
-        width: var(--_menu-button-size);
-        height: var(--_menu-button-size);
       }
     }
 
@@ -138,45 +109,24 @@ template.innerHTML = /* HTML */ `
     </div>
   </div>
 
-  <div id="relative-wrapper">
-    <input type="checkbox" name="relative-input" id="relative-input" />
-    <label for="relative-input">relative</label>
-    <p id="relative-info"></p>
-  </div>
-
-  <div id="controls-wrapper">
-    <md-save-button-with-state></md-save-button-with-state>
-  </div>
-
   <div id="interaction-blocking-div"></div>
 `;
 
 class MDNoteColorThemeComponent extends HTMLElement {
-  /** @type {import("./md-note-color-themes.mjs").MDNoteColorTheme}*/
+  /** @type {import("./md-note-color-themes.mjs").MDNoteColorTheme} */
   #mdNoteColorTheme;
 
   static get observedAttributes() {
-    return ["editable", "new-theme"];
+    return ["editable"];
   }
 
   constructor() {
     super();
     const shadowRoot = this.attachShadow({ mode: "open" });
-
     shadowRoot.appendChild(template.content.cloneNode(true));
 
     // the theme component is not editable, by default
     this.#editable = false;
-
-    shadowRoot
-      .getElementById("relative-input")
-      ?.addEventListener("change", (event) =>
-        this.#handleRelativeChecked(event)
-      );
-
-    shadowRoot
-      .querySelector("md-save-button-with-state")
-      ?.addEventListener("click", () => this.#saveTheme());
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -184,45 +134,9 @@ class MDNoteColorThemeComponent extends HTMLElement {
       case "editable":
         this.#editable = mdAttributeToBoolean(newValue);
         break;
-      case "new-theme":
-        this.#newTheme = mdAttributeToBoolean(newValue);
-        break;
       default:
         console.warn("Unrecognized attribute name.");
     }
-  }
-
-  #saveTheme() {
-    /** @type {import("./md-note-color-themes.mjs").MDNoteColorTheme}*/
-    const newNoteColorTheme = {
-      name: this.name,
-      relative: this.relative,
-      colors: this.colors,
-    };
-
-    const localNoteColorThemesTxt = localStorage.getItem("mdNoteColorThemes");
-
-    let localNoteColorThemesObj;
-    if (localNoteColorThemesTxt != null) {
-      localNoteColorThemesObj = JSON.parse(localNoteColorThemesTxt);
-      if (
-        localNoteColorThemesObj.find(
-          (noteColorTheme) => noteColorTheme.name === newNoteColorTheme.name
-        )
-      )
-        localNoteColorThemesObj.push(newNoteColorTheme);
-    } else localNoteColorThemesObj = [newNoteColorTheme];
-
-    localStorage.setItem(
-      "mdNoteColorThemes",
-      JSON.stringify(localNoteColorThemesObj)
-    );
-  }
-
-  #handleRelativeChecked(event) {
-    event.target.checked
-      ? this.#setRelativeNoteLabels()
-      : this.#setFixedNoteLabels();
   }
 
   /** @returns {boolean} allow the notes to be enabled/disabled and the colors to be chosen (default = false) */
@@ -239,8 +153,12 @@ class MDNoteColorThemeComponent extends HTMLElement {
 
   /** @param {boolean} value - allow the notes to be enabled/disabled and the colors to be chosen (default = false) */
   set #editable(value) {
-    const inputsDisabled = !value;
+    const nameHeading = this.shadowRoot?.getElementById("name-heading");
+    if (nameHeading != null)
+      if (value) nameHeading.contentEditable = "true";
+      else nameHeading.contentEditable = "false";
 
+    const inputsDisabled = !value;
     const disabledInputs = this.shadowRoot?.querySelectorAll("input");
     if (disabledInputs != null)
       disabledInputs.forEach((element) => (element.disabled = inputsDisabled));
@@ -250,46 +168,20 @@ class MDNoteColorThemeComponent extends HTMLElement {
     );
     if (blockingDiv != null)
       blockingDiv.style.display = value ? "none" : "block";
-
-    const controlsWrapper = this.shadowRoot?.getElementById("controls-wrapper");
-    if (controlsWrapper != null)
-      controlsWrapper.style.display = value ? "flex" : "none";
-  }
-
-  /** @returns {boolean} does this component use a "New Theme" template/look (default = false) */
-  get newTheme() {
-    return mdAttributeToBoolean(this.getAttribute("new-theme"));
-  }
-
-  /** @param {boolean} value - does this component use a "New Theme" template/look (default = false) */
-  set newTheme(value) {
-    value
-      ? this.setAttribute("new-theme", "")
-      : this.removeAttribute("new-theme");
-  }
-
-  /** @param {boolean} value - does this component use a "New Theme" template/look (default = false) */
-  set #newTheme(value) {
-    if (value) {
-      const nameHeading = this.shadowRoot?.getElementById("name-heading");
-      if (nameHeading != null) nameHeading.textContent = "New Theme";
-      this.#setFixedNoteLabels();
-    }
-    // do nothing, if value is false
   }
 
   /** display relative note labels */
-  #setRelativeNoteLabels() {
-    this.#setNoteLabels(true);
+  setRelativeNoteLabels() {
+    this.setNoteLabels(true);
   }
 
   /** display fixed note labels */
-  #setFixedNoteLabels() {
-    this.#setNoteLabels(false);
+  setFixedNoteLabels() {
+    this.setNoteLabels(false);
   }
 
   /** @param {boolean} relative - display relative note labels or fixed note labels */
-  #setNoteLabels(relative) {
+  setNoteLabels(relative) {
     const noteLabelThemeName = relative ? "Relative" : "Flat";
     const noteLabels = MD_NOTE_LABEL_THEMES.find(
       (noteLabelTheme) => noteLabelTheme.name === noteLabelThemeName
@@ -316,8 +208,8 @@ class MDNoteColorThemeComponent extends HTMLElement {
       nameHeading.textContent = this.#mdNoteColorTheme.name;
 
     this.#mdNoteColorTheme.relative
-      ? this.#setRelativeNoteLabels()
-      : this.#setFixedNoteLabels();
+      ? this.setRelativeNoteLabels()
+      : this.setFixedNoteLabels();
 
     // set the colors and color-labels.
     this.#mdNoteColorTheme.colors.forEach((color, index) => {
@@ -334,27 +226,13 @@ class MDNoteColorThemeComponent extends HTMLElement {
         if (noteColorInput != null) noteColorInput.value = color;
       }
     });
-
-    // the relative section
-    // assume colors are assigned to fixed notes, by default
-    // the "None" theme is a special case
-    if (this.#mdNoteColorTheme.name === "None") {
-      const relativeWrapper =
-        this.shadowRoot?.getElementById("relative-wrapper");
-      if (relativeWrapper != null) relativeWrapper.style.display = "none";
-    } else if (this.#mdNoteColorTheme.relative) {
-      const relativeInput = /** @type {HTMLInputElement | null} */ (
-        this.shadowRoot?.getElementById("relative-input")
-      );
-      if (relativeInput != null) relativeInput.checked = true;
-    }
   }
 
-  #updateNameHeading() {
-    const nameHeading = this.shadowRoot?.getElementById("name-heading");
-    if (nameHeading != null)
-      nameHeading.textContent = this.#mdNoteColorTheme.name;
-  }
+  // #updateNameHeading() {
+  //   const nameHeading = this.shadowRoot?.getElementById("name-heading");
+  //   if (nameHeading != null)
+  //     nameHeading.textContent = this.#mdNoteColorTheme.name;
+  // }
 
   get name() {
     return this.#mdNoteColorTheme ? this.#mdNoteColorTheme.name : "New Theme";

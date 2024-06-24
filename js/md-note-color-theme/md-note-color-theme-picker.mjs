@@ -1,7 +1,8 @@
-import "../md-element/md-add-to-list-button.mjs";
 import MD_NOTE_COLOR_THEMES from "./md-note-color-themes.mjs";
 import MDNoteColorThemeComponent from "./md-note-color-theme-component.mjs";
+import "./md-note-color-theme-editor.mjs";
 import "../md-element/md-dialog.mjs";
+import "../md-element/md-add-to-list-button.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
@@ -116,8 +117,7 @@ template.innerHTML = /* HTML */ `
         <h3>New Theme</h3>
         <md-add-to-list-button></md-add-to-list-button>
         <dialog is="md-dialog" id="add-new-note-color-theme-dialog">
-          <md-note-color-theme-component editable new-theme>
-          </md-note-color-theme-component>
+          <md-note-color-theme-editor></md-note-color-theme-editor>
         </dialog>
       </label>
     </div>
