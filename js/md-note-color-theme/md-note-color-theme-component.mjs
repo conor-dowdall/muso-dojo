@@ -228,21 +228,12 @@ class MDNoteColorThemeComponent extends HTMLElement {
     });
   }
 
-  // #updateNameHeading() {
-  //   const nameHeading = this.shadowRoot?.getElementById("name-heading");
-  //   if (nameHeading != null)
-  //     nameHeading.textContent = this.#mdNoteColorTheme.name;
-  // }
-
   get name() {
     return this.#mdNoteColorTheme ? this.#mdNoteColorTheme.name : "New Theme";
   }
 
   get relative() {
-    const relativeInput = /** @type {HTMLInputElement | null} */ (
-      this.shadowRoot?.getElementById("relative-input")
-    );
-    return relativeInput?.checked;
+    return this.#mdNoteColorTheme?.relative;
   }
 
   /**
