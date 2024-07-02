@@ -202,38 +202,30 @@ class MDNoteColorThemeComponent extends HTMLElement {
   /** @param {import("./md-note-color-themes.mjs").MDNoteColorTheme} value - a valid MDNoteColorTheme */
   set mdNoteColorTheme(value) {
     this.#mdNoteColorTheme = value;
-
-    const nameHeading = this.shadowRoot?.getElementById("name-heading");
-    if (nameHeading != null)
-      nameHeading.textContent = this.#mdNoteColorTheme.name;
-
-    this.#mdNoteColorTheme.relative
-      ? this.setRelativeNoteLabels()
-      : this.setFixedNoteLabels();
-
-    // set the colors and color-labels.
-    this.#mdNoteColorTheme.colors.forEach((color, index) => {
-      // an empty string (i.e. color == "") is false
-      if (color) {
-        const noteCheckbox = /** @type {HTMLInputElement | null} */ (
-          this.shadowRoot?.getElementById("note-checkbox-" + index)
-        );
-        if (noteCheckbox != null) noteCheckbox.checked = true;
-
-        const noteColorInput = /** @type {HTMLInputElement | null} */ (
-          this.shadowRoot?.getElementById("note-color-input-" + index)
-        );
-        if (noteColorInput != null) noteColorInput.value = color;
-      }
-    });
+    this.name = value.name;
+    this.relative = value.relative;
+    this.colors = value.colors;
   }
 
+  /** @returns {string | undefined} name */
   get name() {
-    return this.#mdNoteColorTheme ? this.#mdNoteColorTheme.name : "New Theme";
+    return this.#mdNoteColorTheme?.name;
   }
 
+  /** @param {string} value  */
+  set name(value) {
+    const nameHeading = this.shadowRoot?.getElementById("name-heading");
+    if (nameHeading != null) nameHeading.textContent = value;
+  }
+
+  /** @returns {boolean | undefined} relative */
   get relative() {
     return this.#mdNoteColorTheme?.relative;
+  }
+
+  /** @param {boolean | undefined} value */
+  set relative(value) {
+    value ? this.setRelativeNoteLabels() : this.setFixedNoteLabels();
   }
 
   /**
@@ -261,6 +253,26 @@ class MDNoteColorThemeComponent extends HTMLElement {
     });
 
     return colors;
+  }
+
+  /**
+   * @param {[string, string, string, string, string, string, string, string, string, string, string, string]} value
+   */
+  set colors(value) {
+    value.forEach((color, index) => {
+      // an empty string (i.e. color == "") is false
+      if (color) {
+        const noteCheckbox = /** @type {HTMLInputElement | null} */ (
+          this.shadowRoot?.getElementById("note-checkbox-" + index)
+        );
+        if (noteCheckbox != null) noteCheckbox.checked = true;
+
+        const noteColorInput = /** @type {HTMLInputElement | null} */ (
+          this.shadowRoot?.getElementById("note-color-input-" + index)
+        );
+        if (noteColorInput != null) noteColorInput.value = color;
+      }
+    });
   }
 }
 
