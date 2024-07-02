@@ -8,7 +8,7 @@ template.innerHTML = /* HTML */ `
     Hopefully, this class name is complicated enough
     to not be used or applied anywhere else! */
     .md-dialog-local-component-style {
-      padding: 0.4em;
+      padding: 0.75em;
       border-radius: 1em;
 
       & h2 {
