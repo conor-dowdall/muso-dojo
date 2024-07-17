@@ -6,6 +6,7 @@ button {
     border: none;
     padding: 0;
     background-color: transparent;
+    
     > svg {
       fill: currentcolor;
       width: 100%;
