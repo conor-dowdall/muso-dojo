@@ -9,7 +9,7 @@ template.innerHTML = /* HTML */ `
     to not be used or applied anywhere else! */
     .md-dialog-local-component-style {
       padding: 0.75em;
-      border-radius: 1em;
+      border-radius: var(--_border-radius-small-em);
 
       & h2 {
         text-align: center;
@@ -31,11 +31,11 @@ template.innerHTML = /* HTML */ `
         display: block;
         width: var(--_menu-button-size-large);
         height: var(--_menu-button-size-large);
-        border-radius: 20%;
+        border-radius: var(--_border-radius-small-percent);
         padding: 0.3em;
 
         &:hover {
-          background-color: color-mix(in srgb, currentcolor 15%, transparent);
+          background-color: var(--_hover-bg-color);
         }
       }
     }
