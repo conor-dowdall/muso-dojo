@@ -5,7 +5,24 @@ import MD_NOTE_COLOR_THEMES from "./md-note-color-themes.mjs";
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
   <style>
+    :host {
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+    }
+
+    #template-area-wrapper {
+      > label > h3 {
+        margin: margin: 0 0 var(--_margin-small) 0;
+      }
+    }
+
     #relative-wrapper {
+      input[type="checkbox"] {
+        width: var(--_checkbox-size-large);
+        height: var(--_checkbox-size-large);
+      }
+
       > #relative-input {
         ~ #relative-info::after {
           content: "colors are assigned to fixed notes";
@@ -28,11 +45,21 @@ template.innerHTML = /* HTML */ `
       > md-save-button-with-state {
         width: var(--_menu-button-size);
         height: var(--_menu-button-size);
+
+        &:hover {
+          background-color: var(--_hover-bg-color);
+        }
       }
     }
   </style>
 
-  <select name="note-color-theme-select" id="note-color-theme-select"></select>
+  <div id="template-area-wrapper">
+    <label for="note-color-theme-select"><h3>Template</h3></label>
+    <select
+      name="note-color-theme-select"
+      id="note-color-theme-select"
+    ></select>
+  </div>
 
   <md-note-color-theme-component editable></md-note-color-theme-component>
 
@@ -56,21 +83,33 @@ class MDNoteColorThemeEditor extends HTMLElement {
     const shadowRoot = this.attachShadow({ mode: "open" });
     shadowRoot.appendChild(template.content.cloneNode(true));
 
-    /** @type{MDNoteColorThemeComponent | null} */
+    /** @type {MDNoteColorThemeComponent | null} */
     const themeComponent = shadowRoot.querySelector(
       "md-note-color-theme-component"
     );
     if (themeComponent != null)
       this.#mdNoteColorThemeComponent = themeComponent;
 
-    const themeSelect = shadowRoot.getElementById("note-color-theme-select");
+    const themeSelect = /** @type {HTMLSelectElement | null} */ (
+      shadowRoot.getElementById("note-color-theme-select")
+    );
     MD_NOTE_COLOR_THEMES.forEach((MD_NOTE_COLOR_THEME) => {
       const themeOption = document.createElement("option");
       themeOption.textContent = MD_NOTE_COLOR_THEME.name;
       themeSelect?.appendChild(themeOption);
     });
+
     this.#mdNoteColorThemeComponent.mdNoteColorTheme = MD_NOTE_COLOR_THEMES[0];
-    this.#mdNoteColorThemeComponent.name = "My Theme";
+    this.#mdNoteColorThemeComponent.name =
+      "My " + this.#mdNoteColorThemeComponent.name + " Theme";
+
+    themeSelect?.addEventListener("change", () => {
+      const theme = MD_NOTE_COLOR_THEMES.find(
+        (MD_NOTE_COLOR_THEME) => MD_NOTE_COLOR_THEME.name === themeSelect.value
+      );
+      if (theme != null)
+        this.#mdNoteColorThemeComponent.mdNoteColorTheme = theme;
+    });
 
     shadowRoot
       .getElementById("relative-input")
@@ -86,7 +125,7 @@ class MDNoteColorThemeEditor extends HTMLElement {
   #saveTheme() {
     /** @type {import("./md-note-color-themes.mjs").MDNoteColorTheme} */
     const newNoteColorTheme = {
-      name: this.#mdNoteColorThemeComponent.name,
+      name: "My " + this.#mdNoteColorThemeComponent.name + " Theme",
       relative: this.#mdNoteColorThemeComponent.relative,
       colors: this.#mdNoteColorThemeComponent.colors,
     };
