@@ -52,7 +52,7 @@ template.innerHTML = /* HTML */ `
       & md-add-to-list-button {
         display: block;
         margin-inline: auto;
-        margin-block-start: 0.5em;
+        margin-block-start: var(--_margin-small);
         width: var(--_menu-button-size-large);
         height: var(--_menu-button-size-large);
       }
@@ -62,16 +62,16 @@ template.innerHTML = /* HTML */ `
       > label {
         display: block;
         border: 0.1em solid;
-        border-radius: 1em;
+        border-radius: var(--_border-radius-small-em);
         padding: 1em;
 
         &:hover {
-          background-color: color-mix(in srgb, currentcolor 8%, transparent);
+          background-color: var(--_hover-bg-color);
         }
       }
 
       > input:checked + label {
-        background-color: color-mix(in srgb, currentcolor 15%, transparent);
+        background-color: var(--_hover-bg-color);
       }
     }
   </style>
