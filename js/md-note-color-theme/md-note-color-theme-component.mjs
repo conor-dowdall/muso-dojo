@@ -113,7 +113,7 @@ template.innerHTML = /* HTML */ `
 `;
 
 class MDNoteColorThemeComponent extends HTMLElement {
-  /** @type {import("./md-note-color-themes.mjs").MDNoteColorTheme} */
+  /** @type {import("./md-note-color-themes.mjs").MDNoteColorTheme | undefined} */
   #mdNoteColorTheme;
 
   static get observedAttributes() {
@@ -218,9 +218,9 @@ class MDNoteColorThemeComponent extends HTMLElement {
     if (nameHeading != null) nameHeading.textContent = value;
   }
 
-  /** @returns {boolean | undefined} relative */
+  /** @returns {boolean} relative */
   get relative() {
-    return this.#mdNoteColorTheme?.relative;
+    return this.#mdNoteColorTheme?.relative ? true : false;
   }
 
   /** @param {boolean | undefined} value */
@@ -260,17 +260,22 @@ class MDNoteColorThemeComponent extends HTMLElement {
    */
   set colors(value) {
     value.forEach((color, index) => {
-      // an empty string (i.e. color == "") is false
-      if (color) {
-        const noteCheckbox = /** @type {HTMLInputElement | null} */ (
-          this.shadowRoot?.getElementById("note-checkbox-" + index)
-        );
-        if (noteCheckbox != null) noteCheckbox.checked = true;
+      const noteCheckbox = /** @type {HTMLInputElement | null} */ (
+        this.shadowRoot?.getElementById("note-checkbox-" + index)
+      );
+      const noteColorInput = /** @type {HTMLInputElement | null} */ (
+        this.shadowRoot?.getElementById("note-color-input-" + index)
+      );
 
-        const noteColorInput = /** @type {HTMLInputElement | null} */ (
-          this.shadowRoot?.getElementById("note-color-input-" + index)
-        );
-        if (noteColorInput != null) noteColorInput.value = color;
+      if (noteCheckbox != null && noteColorInput != null) {
+        // an empty string (i.e. color == "") is false
+        if (color) {
+          noteCheckbox.checked = true;
+          noteColorInput.value = color;
+        } else {
+          noteCheckbox.checked = false;
+          noteColorInput.value = "#000000";
+        }
       }
     });
   }
