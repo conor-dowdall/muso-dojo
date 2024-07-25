@@ -93,6 +93,7 @@ class MDNoteColorThemeEditor extends HTMLElement {
     const themeSelect = /** @type {HTMLSelectElement | null} */ (
       shadowRoot.getElementById("note-color-theme-select")
     );
+
     MD_NOTE_COLOR_THEMES.forEach((MD_NOTE_COLOR_THEME) => {
       const themeOption = document.createElement("option");
       themeOption.textContent = MD_NOTE_COLOR_THEME.name;
@@ -103,19 +104,24 @@ class MDNoteColorThemeEditor extends HTMLElement {
     this.#mdNoteColorThemeComponent.name =
       "My " + this.#mdNoteColorThemeComponent.name + " Theme";
 
+    const relativeInput = /** @type {HTMLInputElement | null} **/ (
+      shadowRoot.getElementById("relative-input")
+    );
+
     themeSelect?.addEventListener("change", () => {
       const theme = MD_NOTE_COLOR_THEMES.find(
         (MD_NOTE_COLOR_THEME) => MD_NOTE_COLOR_THEME.name === themeSelect.value
       );
-      if (theme != null)
+      if (theme != null) {
         this.#mdNoteColorThemeComponent.mdNoteColorTheme = theme;
+        if (relativeInput != null)
+          relativeInput.checked = this.#mdNoteColorThemeComponent.relative;
+      }
     });
 
-    shadowRoot
-      .getElementById("relative-input")
-      ?.addEventListener("change", (event) =>
-        this.#handleRelativeChecked(event)
-      );
+    relativeInput?.addEventListener("change", (event) =>
+      this.#handleRelativeChecked(event)
+    );
 
     shadowRoot
       .querySelector("md-save-button-with-state")
