@@ -154,20 +154,22 @@ class MDNoteColorThemeComponent extends HTMLElement {
   /** @param {boolean} value - allow the notes to be enabled/disabled and the colors to be chosen (default = false) */
   set #editable(value) {
     const nameHeading = this.shadowRoot?.getElementById("name-heading");
-    if (nameHeading != null)
+    if (nameHeading != null) {
       if (value) nameHeading.contentEditable = "true";
       else nameHeading.contentEditable = "false";
+    } else console.warn("name-heading element not found");
 
-    const inputsDisabled = !value;
     const disabledInputs = this.shadowRoot?.querySelectorAll("input");
     if (disabledInputs != null)
-      disabledInputs.forEach((element) => (element.disabled = inputsDisabled));
+      disabledInputs.forEach((element) => (element.disabled = !value));
+    else console.warn("disabled-input elements not found");
 
     const blockingDiv = this.shadowRoot?.getElementById(
       "interaction-blocking-div"
     );
     if (blockingDiv != null)
       blockingDiv.style.display = value ? "none" : "block";
+    else console.warn("interaction-blocking-div element not found");
   }
 
   /** display relative note labels */
@@ -191,6 +193,7 @@ class MDNoteColorThemeComponent extends HTMLElement {
         "note-color-label-" + index
       );
       if (noteColorLabel != null) noteColorLabel.textContent = noteLabel;
+      else console.warn("note-color-label element not found");
     });
   }
 
@@ -216,11 +219,12 @@ class MDNoteColorThemeComponent extends HTMLElement {
   set name(value) {
     const nameHeading = this.shadowRoot?.getElementById("name-heading");
     if (nameHeading != null) nameHeading.textContent = value;
+    else console.warn("name-heading element not found");
   }
 
-  /** @returns {boolean} relative */
+  /** @returns {boolean | undefined} relative */
   get relative() {
-    return this.#mdNoteColorTheme?.relative ? true : false;
+    return this.#mdNoteColorTheme?.relative;
   }
 
   /** @param {boolean | undefined} value */
@@ -236,21 +240,19 @@ class MDNoteColorThemeComponent extends HTMLElement {
     /** @type {[string, string, string, string, string, string, string, string, string, string, string, string]} */
     const colors = ["", "", "", "", "", "", "", "", "", "", "", ""];
 
+    const noteCheckboxes = this.shadowRoot?.querySelectorAll(
+      '[id|="note-checkbox"]'
+    );
     const noteColorInputs = this.shadowRoot?.querySelectorAll(
       '[id|="note-color-input"]'
     );
 
-    const noteCheckboxes = this.shadowRoot?.querySelectorAll(
-      '[id|="note-checkbox"]'
-    );
-
-    noteColorInputs?.forEach((noteColorInput, i) => {
-      if (
-        noteCheckboxes != null &&
-        /** @type {HTMLInputElement} */ (noteCheckboxes[i]).checked
-      )
-        colors[i] = /** @type {HTMLInputElement} */ (noteColorInput).value;
-    });
+    if (noteCheckboxes != null && noteColorInputs != null)
+      noteColorInputs.forEach((noteColorInput, i) => {
+        if (/** @type {HTMLInputElement} */ (noteCheckboxes[i]).checked)
+          colors[i] = /** @type {HTMLInputElement} */ (noteColorInput).value;
+      });
+    else console.warn("note-color-input elements not found");
 
     return colors;
   }
@@ -276,7 +278,7 @@ class MDNoteColorThemeComponent extends HTMLElement {
           noteCheckbox.checked = false;
           noteColorInput.value = "#000000";
         }
-      }
+      } else console.warn("note-color-input element not found");
     });
   }
 }

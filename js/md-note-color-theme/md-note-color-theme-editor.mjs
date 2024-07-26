@@ -89,6 +89,7 @@ class MDNoteColorThemeEditor extends HTMLElement {
     );
     if (themeComponent != null)
       this.#mdNoteColorThemeComponent = themeComponent;
+    else console.warn("md-note-color-theme-component cannot be found");
 
     const themeSelect = /** @type {HTMLSelectElement | null} */ (
       shadowRoot.getElementById("note-color-theme-select")
@@ -101,8 +102,7 @@ class MDNoteColorThemeEditor extends HTMLElement {
     });
 
     this.#mdNoteColorThemeComponent.mdNoteColorTheme = MD_NOTE_COLOR_THEMES[0];
-    this.#mdNoteColorThemeComponent.name =
-      "My " + this.#mdNoteColorThemeComponent.name + " Theme";
+    this.#mdNoteColorThemeComponent.name = "Custom Theme";
 
     const relativeInput = /** @type {HTMLInputElement | null} **/ (
       shadowRoot.getElementById("relative-input")
@@ -115,7 +115,11 @@ class MDNoteColorThemeEditor extends HTMLElement {
       if (theme != null) {
         this.#mdNoteColorThemeComponent.mdNoteColorTheme = theme;
         if (relativeInput != null)
-          relativeInput.checked = this.#mdNoteColorThemeComponent.relative;
+          if (this.#mdNoteColorThemeComponent.relative != null)
+            relativeInput.checked = this.#mdNoteColorThemeComponent.relative;
+          else
+            console.warn("mdNoteColorThemeComponent.relative may be undefined");
+        else console.warn("relative-input element cannot be found");
       }
     });
 
@@ -131,7 +135,8 @@ class MDNoteColorThemeEditor extends HTMLElement {
   #saveTheme() {
     /** @type {import("./md-note-color-themes.mjs").MDNoteColorTheme} */
     const newNoteColorTheme = {
-      name: "My " + this.#mdNoteColorThemeComponent.name + " Theme",
+      // @ts-ignore - name is defined in the constructor, so ignore potential for undefined
+      name: this.#mdNoteColorThemeComponent.name,
       relative: this.#mdNoteColorThemeComponent.relative,
       colors: this.#mdNoteColorThemeComponent.colors,
     };
