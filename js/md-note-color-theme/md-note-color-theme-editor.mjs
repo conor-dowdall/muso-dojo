@@ -134,6 +134,7 @@ class MDNoteColorThemeEditor extends HTMLElement {
 
   #saveTheme() {
     this.#mdNoteColorThemeComponent.syncNameWithHeading();
+    this.#mdNoteColorThemeComponent.syncColorsWithColorInputs();
 
     const localNoteColorThemesTxt = localStorage.getItem("mdNoteColorThemes");
 
@@ -163,9 +164,7 @@ class MDNoteColorThemeEditor extends HTMLElement {
   }
 
   #handleRelativeChecked(event) {
-    event.target.checked
-      ? this.#mdNoteColorThemeComponent.setRelativeNoteLabels()
-      : this.#mdNoteColorThemeComponent.setFixedNoteLabels();
+    this.#mdNoteColorThemeComponent.relative = event.target.checked;
   }
 }
 

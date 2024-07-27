@@ -175,6 +175,28 @@ class MDNoteColorThemeComponent extends HTMLElement {
   syncNameWithHeading() {
     const nameHeading = this.shadowRoot?.getElementById("name-heading");
     if (nameHeading != null) this.name = nameHeading.textContent || "Undefined";
+    else console.warn("name-heading element cannot be found");
+  }
+
+  syncColorsWithColorInputs() {
+    /** @type {[string, string, string, string, string, string, string, string, string, string, string, string]} */
+    const colors = ["", "", "", "", "", "", "", "", "", "", "", ""];
+
+    const noteCheckboxes = this.shadowRoot?.querySelectorAll(
+      '[id|="note-checkbox"]'
+    );
+    const noteColorInputs = this.shadowRoot?.querySelectorAll(
+      '[id|="note-color-input"]'
+    );
+
+    if (noteCheckboxes != null && noteColorInputs != null)
+      noteColorInputs.forEach((noteColorInput, i) => {
+        if (/** @type {HTMLInputElement} */ (noteCheckboxes[i]).checked)
+          colors[i] = /** @type {HTMLInputElement} */ (noteColorInput).value;
+      });
+    else console.warn("note-color-input elements not found");
+
+    this.colors = colors;
   }
 
   /** display relative note labels */
