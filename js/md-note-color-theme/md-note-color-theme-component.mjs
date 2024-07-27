@@ -172,6 +172,11 @@ class MDNoteColorThemeComponent extends HTMLElement {
     else console.warn("interaction-blocking-div element not found");
   }
 
+  syncNameWithHeading() {
+    const nameHeading = this.shadowRoot?.getElementById("name-heading");
+    if (nameHeading != null) this.name = nameHeading.textContent || "Undefined";
+  }
+
   /** display relative note labels */
   setRelativeNoteLabels() {
     this.setNoteLabels(true);
@@ -204,7 +209,6 @@ class MDNoteColorThemeComponent extends HTMLElement {
 
   /** @param {import("./md-note-color-themes.mjs").MDNoteColorTheme} value - a valid MDNoteColorTheme */
   set mdNoteColorTheme(value) {
-    this.#mdNoteColorTheme = value;
     this.name = value.name;
     this.relative = value.relative;
     this.colors = value.colors;
@@ -217,6 +221,14 @@ class MDNoteColorThemeComponent extends HTMLElement {
 
   /** @param {string} value  */
   set name(value) {
+    if (this.#mdNoteColorTheme != null) this.#mdNoteColorTheme.name = value;
+    else
+      this.#mdNoteColorTheme = {
+        name: value,
+        relative: false,
+        colors: ["", "", "", "", "", "", "", "", "", "", "", ""],
+      };
+
     const nameHeading = this.shadowRoot?.getElementById("name-heading");
     if (nameHeading != null) nameHeading.textContent = value;
     else console.warn("name-heading element not found");
@@ -227,40 +239,39 @@ class MDNoteColorThemeComponent extends HTMLElement {
     return this.#mdNoteColorTheme?.relative;
   }
 
-  /** @param {boolean | undefined} value */
+  /** @param {boolean} value */
   set relative(value) {
+    if (this.#mdNoteColorTheme != null) this.#mdNoteColorTheme.relative = value;
+    else
+      this.#mdNoteColorTheme = {
+        name: "Undefined",
+        relative: value,
+        colors: ["", "", "", "", "", "", "", "", "", "", "", ""],
+      };
+
     value ? this.setRelativeNoteLabels() : this.setFixedNoteLabels();
   }
 
   /**
-   * @returns {[string, string, string, string, string, string, string, string, string, string, string, string]}
+   * @returns {[string, string, string, string, string, string, string, string, string, string, string, string] | undefined}
    * an array of RGB colors
    */
   get colors() {
-    /** @type {[string, string, string, string, string, string, string, string, string, string, string, string]} */
-    const colors = ["", "", "", "", "", "", "", "", "", "", "", ""];
-
-    const noteCheckboxes = this.shadowRoot?.querySelectorAll(
-      '[id|="note-checkbox"]'
-    );
-    const noteColorInputs = this.shadowRoot?.querySelectorAll(
-      '[id|="note-color-input"]'
-    );
-
-    if (noteCheckboxes != null && noteColorInputs != null)
-      noteColorInputs.forEach((noteColorInput, i) => {
-        if (/** @type {HTMLInputElement} */ (noteCheckboxes[i]).checked)
-          colors[i] = /** @type {HTMLInputElement} */ (noteColorInput).value;
-      });
-    else console.warn("note-color-input elements not found");
-
-    return colors;
+    return this.#mdNoteColorTheme?.colors;
   }
 
   /**
    * @param {[string, string, string, string, string, string, string, string, string, string, string, string]} value
    */
   set colors(value) {
+    if (this.#mdNoteColorTheme != null) this.#mdNoteColorTheme.colors = value;
+    else
+      this.#mdNoteColorTheme = {
+        name: "Undefined",
+        relative: false,
+        colors: value,
+      };
+
     value.forEach((color, index) => {
       const noteCheckbox = /** @type {HTMLInputElement | null} */ (
         this.shadowRoot?.getElementById("note-checkbox-" + index)
@@ -276,7 +287,7 @@ class MDNoteColorThemeComponent extends HTMLElement {
           noteColorInput.value = color;
         } else {
           noteCheckbox.checked = false;
-          noteColorInput.value = "#000000";
+          noteColorInput.value = "";
         }
       } else console.warn("note-color-input element not found");
     });

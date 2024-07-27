@@ -8,7 +8,7 @@ template.innerHTML = /* HTML */ `
     :host {
       display: flex;
       flex-direction: column;
-      gap: 2em;
+      gap: 1em;
     }
 
     #template-area-wrapper {
@@ -133,26 +133,28 @@ class MDNoteColorThemeEditor extends HTMLElement {
   }
 
   #saveTheme() {
-    /** @type {import("./md-note-color-themes.mjs").MDNoteColorTheme} */
-    const newNoteColorTheme = {
-      // @ts-ignore - name is defined in the constructor, so ignore potential for undefined
-      name: this.#mdNoteColorThemeComponent.name,
-      relative: this.#mdNoteColorThemeComponent.relative,
-      colors: this.#mdNoteColorThemeComponent.colors,
-    };
+    this.#mdNoteColorThemeComponent.syncNameWithHeading();
 
     const localNoteColorThemesTxt = localStorage.getItem("mdNoteColorThemes");
 
     let localNoteColorThemesObj;
     if (localNoteColorThemesTxt != null) {
       localNoteColorThemesObj = JSON.parse(localNoteColorThemesTxt);
-      if (
-        localNoteColorThemesObj.find(
-          (noteColorTheme) => noteColorTheme.name === newNoteColorTheme.name
-        )
-      )
-        localNoteColorThemesObj.push(newNoteColorTheme);
-    } else localNoteColorThemesObj = [newNoteColorTheme];
+      const alreadyExists = localNoteColorThemesObj.findIndex(
+        (noteColorTheme) =>
+          noteColorTheme.name === this.#mdNoteColorThemeComponent.name
+      );
+      if (alreadyExists < 0)
+        localNoteColorThemesObj.push(
+          this.#mdNoteColorThemeComponent.mdNoteColorTheme
+        );
+      else
+        localNoteColorThemesObj[alreadyExists] =
+          this.#mdNoteColorThemeComponent.mdNoteColorTheme;
+    } else
+      localNoteColorThemesObj = [
+        this.#mdNoteColorThemeComponent.mdNoteColorTheme,
+      ];
 
     localStorage.setItem(
       "mdNoteColorThemes",

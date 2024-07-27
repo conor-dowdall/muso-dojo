@@ -4,7 +4,7 @@
  * A Muso Dojo note color theme.
  * @typedef {object} MDNoteColorTheme
  * @property {string} name - the name of the Muso Dojo note color theme
- * @property {boolean} [relative] - if true, the colors will start
+ * @property {boolean} relative - if true, the colors will start
  * relative to the root note, that is set elsewhere. If false, the
  * colors will be fixed (note#0 = color#0). Default = false.
  * @property {[string, string, string, string, string, string, string, string, string, string, string, string]} colors -
