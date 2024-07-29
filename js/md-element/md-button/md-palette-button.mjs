@@ -19,7 +19,7 @@ template.innerHTML = /* HTML */ `
   </button>
 `;
 
-class MDNoteColorThemeButton extends HTMLElement {
+class MDPaletteButton extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -27,6 +27,6 @@ class MDNoteColorThemeButton extends HTMLElement {
   }
 }
 
-customElements.define("md-note-color-theme-button", MDNoteColorThemeButton);
+customElements.define("md-palette-button", MDPaletteButton);
 
-export default MDNoteColorThemeButton;
+export default MDPaletteButton;

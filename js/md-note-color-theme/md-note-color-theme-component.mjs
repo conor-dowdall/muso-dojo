@@ -1,7 +1,6 @@
 // @ts-check
 import MD_NOTE_LABEL_THEMES from "../md-note-label/md-note-label-themes.mjs";
 import { mdAttributeToBoolean } from "../md-utilities/md-general-utilities.mjs";
-import "../md-element/md-save-button-with-state.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `

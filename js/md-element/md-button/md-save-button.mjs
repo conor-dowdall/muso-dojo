@@ -1,4 +1,3 @@
-import MDButtonWithState from "./md-button-with-state.mjs";
 import MD_BUTTON_STYLE from "./md-button-style.mjs";
 
 const template = document.createElement("template");
@@ -9,7 +8,6 @@ template.innerHTML = /* HTML */ `
 
   <button type="button">
     <svg
-      style="fill: currentcolor; width: 100%; height: 100%;"
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
@@ -22,13 +20,13 @@ template.innerHTML = /* HTML */ `
   </button>
 `;
 
-class MDSaveButtonWithState extends MDButtonWithState {
+class MDSaveButton extends HTMLElement {
   constructor() {
     super();
     this.appendChild(template.content.cloneNode(true));
   }
 }
 
-customElements.define("md-save-button-with-state", MDSaveButtonWithState);
+customElements.define("md-save-button", MDSaveButton);
 
-export default MDSaveButtonWithState;
+export default MDSaveButton;

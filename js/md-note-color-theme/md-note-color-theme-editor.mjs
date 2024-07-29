@@ -1,6 +1,7 @@
 // @ts-check
 import MDNoteColorThemeComponent from "./md-note-color-theme-component.mjs";
 import MD_NOTE_COLOR_THEMES from "./md-note-color-themes.mjs";
+import "../md-element/md-button/md-save-button.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
@@ -42,7 +43,7 @@ template.innerHTML = /* HTML */ `
       display: flex;
       justify-content: end;
 
-      > md-save-button-with-state {
+      > md-save-button {
         width: var(--_menu-button-size);
         height: var(--_menu-button-size);
 
@@ -70,7 +71,7 @@ template.innerHTML = /* HTML */ `
   </div>
 
   <div id="controls-wrapper">
-    <md-save-button-with-state></md-save-button-with-state>
+    <md-save-button></md-save-button>
   </div>
 `;
 
@@ -128,7 +129,7 @@ class MDNoteColorThemeEditor extends HTMLElement {
     );
 
     shadowRoot
-      .querySelector("md-save-button-with-state")
+      .querySelector("md-save-button")
       ?.addEventListener("click", () => this.#saveTheme());
   }
 

@@ -2,7 +2,7 @@ import MD_NOTE_COLOR_THEMES from "./md-note-color-themes.mjs";
 import MDNoteColorThemeComponent from "./md-note-color-theme-component.mjs";
 import "./md-note-color-theme-editor.mjs";
 import "../md-element/md-dialog.mjs";
-import "../md-element/md-add-to-list-button.mjs";
+import "../md-element/md-button/md-edit-button.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
@@ -42,20 +42,20 @@ template.innerHTML = /* HTML */ `
       }
     }
 
+    md-edit-button {
+      display: block;
+      margin-inline: auto;
+      margin-block-start: var(--_margin-small);
+      width: var(--_menu-button-size-large);
+      height: var(--_menu-button-size-large);
+    }
+
     #note-color-theme-picker-wrapper {
       display: flex;
       flex-direction: column;
       text-align: center;
       align-items: center;
       row-gap: 1.5em;
-
-      & md-add-to-list-button {
-        display: block;
-        margin-inline: auto;
-        margin-block-start: var(--_margin-small);
-        width: var(--_menu-button-size-large);
-        height: var(--_menu-button-size-large);
-      }
     }
 
     .selectable-option {
@@ -77,6 +77,7 @@ template.innerHTML = /* HTML */ `
   </style>
 
   <h2>Default Note Color</h2>
+
   <div id="note-color-picker-wrapper">
     <!-- color "None" input -->
     <div class="note-color-radio-input-wrapper selectable-option">
@@ -111,11 +112,12 @@ template.innerHTML = /* HTML */ `
   </div>
 
   <h2>Note Color Theme</h2>
+
   <div id="note-color-theme-picker-wrapper">
     <div id="add-new-note-color-theme" class="selectable-option">
       <label>
-        <h3>New Theme</h3>
-        <md-add-to-list-button></md-add-to-list-button>
+        <h3>Theme Editor</h3>
+        <md-edit-button></md-edit-button>
         <dialog is="md-dialog" id="add-new-note-color-theme-dialog">
           <md-note-color-theme-editor></md-note-color-theme-editor>
         </dialog>

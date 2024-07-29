@@ -1,4 +1,4 @@
-import "./md-close-button.mjs";
+import "./md-button/md-close-button.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `

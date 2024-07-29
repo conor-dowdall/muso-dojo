@@ -1,7 +1,7 @@
 import "../md-note-color-theme/md-note-color-theme-picker.mjs";
-import "../md-element/md-note-color-theme-button.mjs";
-import "../md-element/md-resize-button.mjs";
-import "../md-element/md-settings-button.mjs";
+import "../md-element/md-button/md-palette-button.mjs";
+import "../md-element/md-button/md-resize-button.mjs";
+import "../md-element/md-button/md-settings-button.mjs";
 import "../md-element/md-dialog.mjs";
 
 const template = document.createElement("template");
@@ -48,10 +48,10 @@ template.innerHTML = /* HTML */ `
   </style>
 
   <!-- color button and dialog -->
-  <md-note-color-theme-button
+  <md-palette-button
     id="note-color-theme-button"
     class="menu-button"
-  ></md-note-color-theme-button>
+  ></md-palette-button>
   <dialog is="md-dialog" id="note-color-theme-dialog">
     <md-note-color-theme-picker></md-note-color-theme-picker>
   </dialog>
