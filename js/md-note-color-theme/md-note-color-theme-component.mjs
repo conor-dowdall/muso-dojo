@@ -169,6 +169,25 @@ class MDNoteColorThemeComponent extends HTMLElement {
     if (blockingDiv != null)
       blockingDiv.style.display = value ? "none" : "block";
     else console.warn("interaction-blocking-div element not found");
+
+    if (value)
+      this.shadowRoot?.addEventListener("change", (event) => {
+        this.checkNoteCheckbox(event);
+      });
+    else
+      this.shadowRoot?.removeEventListener("change", (event) => {
+        this.checkNoteCheckbox(event);
+      });
+  }
+
+  /** @param {Event} event */
+  checkNoteCheckbox(event) {
+    const target = /** @type {HTMLInputElement} **/ (event.target);
+    const checkbox = /** @type {HTMLInputElement | null} **/ (
+      this.shadowRoot?.querySelector("input:has(~ #" + target.id + "")
+    );
+    // only check if the correct element has been found (a checkbox with target.id after it)
+    if (checkbox != null) checkbox.checked = true;
   }
 
   syncNameWithHeading() {
