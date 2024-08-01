@@ -133,10 +133,24 @@ class MDInstrument extends HTMLElement {
     return this.props.noteColorTheme ?? "None";
   }
   set noteColorTheme(value) {
-    const newNoteColorTheme = MD_NOTE_COLOR_THEMES.find(
+    let newNoteColorTheme;
+
+    newNoteColorTheme = MD_NOTE_COLOR_THEMES.find(
       (noteColorTheme) =>
         noteColorTheme.name.toLowerCase() === value.toLowerCase()
     );
+
+    if (newNoteColorTheme == null) {
+      const localNoteColorThemesTxt = localStorage.getItem("mdNoteColorThemes");
+      if (localNoteColorThemesTxt != null) {
+        const localNoteColorThemesObj = JSON.parse(localNoteColorThemesTxt);
+        newNoteColorTheme = localNoteColorThemesObj.find(
+          (noteColorTheme) =>
+            noteColorTheme.name.toLowerCase() === value.toLowerCase()
+        );
+      }
+    }
+
     if (newNoteColorTheme != null) {
       newNoteColorTheme.colors.forEach((color, index) =>
         this.style.setProperty(`--md-note-color-${index}`, color)

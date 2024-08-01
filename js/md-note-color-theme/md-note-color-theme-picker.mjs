@@ -174,6 +174,17 @@ class MDNoteColorThemePicker extends HTMLElement {
         this.#getNoteColorThemeOption(MD_NOTE_COLOR_THEME, index)
       );
     });
+
+    const localNoteColorThemesTxt = localStorage.getItem("mdNoteColorThemes");
+    let localNoteColorThemesObj;
+    if (localNoteColorThemesTxt != null) {
+      localNoteColorThemesObj = JSON.parse(localNoteColorThemesTxt);
+      localNoteColorThemesObj.forEach((LOCAL_MD_NOTE_COLOR_THEME, index) => {
+        noteColorThemePickerWrapper.append(
+          this.#getNoteColorThemeOption(LOCAL_MD_NOTE_COLOR_THEME, "L" + index)
+        );
+      });
+    }
   }
 
   #getNoteColorThemeOption(MD_NOTE_COLOR_THEME, index) {
