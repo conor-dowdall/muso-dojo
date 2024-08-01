@@ -2,7 +2,7 @@ import {
   mdAttributeToProperty,
   mdAttributeToBoolean,
 } from "../md-utilities/md-general-utilities.mjs";
-import MD_NOTE_COLOR_THEMES from "../md-note-color-theme/md-note-color-themes.mjs";
+import { getNoteColorTheme } from "../md-note-color-theme/md-note-color-theme-utilities.mjs";
 
 /**
  * A base class that specific Muso Dojo instruments should inherit from,
@@ -133,23 +133,7 @@ class MDInstrument extends HTMLElement {
     return this.props.noteColorTheme ?? "None";
   }
   set noteColorTheme(value) {
-    let newNoteColorTheme;
-
-    newNoteColorTheme = MD_NOTE_COLOR_THEMES.find(
-      (noteColorTheme) =>
-        noteColorTheme.name.toLowerCase() === value.toLowerCase()
-    );
-
-    if (newNoteColorTheme == null) {
-      const localNoteColorThemesTxt = localStorage.getItem("mdNoteColorThemes");
-      if (localNoteColorThemesTxt != null) {
-        const localNoteColorThemesObj = JSON.parse(localNoteColorThemesTxt);
-        newNoteColorTheme = localNoteColorThemesObj.find(
-          (noteColorTheme) =>
-            noteColorTheme.name.toLowerCase() === value.toLowerCase()
-        );
-      }
-    }
+    const newNoteColorTheme = getNoteColorTheme(value);
 
     if (newNoteColorTheme != null) {
       newNoteColorTheme.colors.forEach((color, index) =>
