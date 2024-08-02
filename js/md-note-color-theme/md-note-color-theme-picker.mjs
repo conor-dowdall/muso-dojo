@@ -3,6 +3,7 @@ import MDNoteColorThemeComponent from "./md-note-color-theme-component.mjs";
 import "./md-note-color-theme-editor.mjs";
 import "../md-element/md-dialog.mjs";
 import "../md-element/md-button/md-edit-button.mjs";
+import { getNoteColorThemes } from "./md-note-color-theme-utilities.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
@@ -21,13 +22,13 @@ template.innerHTML = /* HTML */ `
         column-gap: 0.5em;
 
         > #note-color-radio-input-none + label {
-          line-height: var(--_menu-button-size-large);
+          line-height: var(--_md-menu-button-size-large);
         }
 
         > #note-color-radio-input-color {
           + label {
-            width: var(--_menu-button-size-large);
-            height: var(--_menu-button-size-large);
+            width: var(--_md-menu-button-size-large);
+            height: var(--_md-menu-button-size-large);
 
             > #note-color-color-input {
               width: 100%;
@@ -45,9 +46,9 @@ template.innerHTML = /* HTML */ `
     md-edit-button {
       display: block;
       margin-inline: auto;
-      margin-block-start: var(--_margin-small);
-      width: var(--_menu-button-size-large);
-      height: var(--_menu-button-size-large);
+      margin-block-start: var(--_md-margin-small);
+      width: var(--_md-menu-button-size-large);
+      height: var(--_md-menu-button-size-large);
     }
 
     #note-color-theme-picker-wrapper {
@@ -62,16 +63,16 @@ template.innerHTML = /* HTML */ `
       > label {
         display: block;
         border: 0.1em solid;
-        border-radius: var(--_border-radius-small-em);
-        padding: 1em;
+        border-radius: var(--_md-border-radius-small-em);
+        padding: var(--_md-padding-large);
 
         &:hover {
-          background-color: var(--_hover-bg-color);
+          background-color: var(--_md-hover-bg-color);
         }
       }
 
       > input:checked + label {
-        background-color: var(--_hover-bg-color);
+        background-color: var(--_md-hover-bg-color);
       }
     }
   </style>
@@ -114,11 +115,11 @@ template.innerHTML = /* HTML */ `
   <h2>Note Color Theme</h2>
 
   <div id="note-color-theme-picker-wrapper">
-    <div id="add-new-note-color-theme" class="selectable-option">
+    <div id="note-color-theme" class="selectable-option">
       <label>
         <h3>Theme Editor</h3>
         <md-edit-button></md-edit-button>
-        <dialog is="md-dialog" id="add-new-note-color-theme-dialog">
+        <dialog is="md-dialog" id="note-color-theme-dialog">
           <md-note-color-theme-editor></md-note-color-theme-editor>
         </dialog>
       </label>
@@ -145,6 +146,7 @@ class MDNoteColorThemePicker extends HTMLElement {
   constructor() {
     super();
     this.appendChild(template.content.cloneNode(true));
+
     // note color
     const noteColorRadioInputColor = this.querySelector(
       "#note-color-radio-input-color"
@@ -156,35 +158,22 @@ class MDNoteColorThemePicker extends HTMLElement {
     });
 
     // note color theme
-    const addNewNoteColorThemeOption = this.querySelector(
-      "#add-new-note-color-theme"
+    const noteColorThemeEditorOption = this.querySelector("#note-color-theme");
+    const noteColorThemeEditorDialog = this.querySelector(
+      "#note-color-theme-dialog"
     );
-    const addNewNoteColorThemeDialog = this.querySelector(
-      "#add-new-note-color-theme-dialog"
-    );
-    addNewNoteColorThemeOption.addEventListener("click", () => {
-      addNewNoteColorThemeDialog.showModal();
+    noteColorThemeEditorOption.addEventListener("click", () => {
+      noteColorThemeEditorDialog.showModal();
     });
 
     const noteColorThemePickerWrapper = this.querySelector(
       "#note-color-theme-picker-wrapper"
     );
-    MD_NOTE_COLOR_THEMES.forEach((MD_NOTE_COLOR_THEME, index) => {
+    getNoteColorThemes().forEach((MD_NOTE_COLOR_THEME, index) => {
       noteColorThemePickerWrapper.append(
         this.#getNoteColorThemeOption(MD_NOTE_COLOR_THEME, index)
       );
     });
-
-    const localNoteColorThemesTxt = localStorage.getItem("mdNoteColorThemes");
-    let localNoteColorThemesObj;
-    if (localNoteColorThemesTxt != null) {
-      localNoteColorThemesObj = JSON.parse(localNoteColorThemesTxt);
-      localNoteColorThemesObj.forEach((LOCAL_MD_NOTE_COLOR_THEME, index) => {
-        noteColorThemePickerWrapper.append(
-          this.#getNoteColorThemeOption(LOCAL_MD_NOTE_COLOR_THEME, "L" + index)
-        );
-      });
-    }
   }
 
   #getNoteColorThemeOption(MD_NOTE_COLOR_THEME, index) {

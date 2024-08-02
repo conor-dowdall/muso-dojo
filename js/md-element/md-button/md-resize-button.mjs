@@ -6,8 +6,10 @@ template.innerHTML = /* HTML */ `
     :host([on]) > button {
       border-bottom: 0.2em solid currentcolor;
     }
+
     ${MD_BUTTON_STYLE}
   </style>
+
   <button type="button">
     <svg
       xmlns="http://www.w3.org/2000/svg"

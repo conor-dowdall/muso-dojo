@@ -8,26 +8,19 @@ const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
   <style>
     :host {
-      --_menu-button-size: var(--menu-button-size, 2em);
-      --_menu-button-size-large: var(--menu-button-size-large, 2.5em);
-      --_checkbox-size-large: var(--checkbox-size-large, 1.5em);
-      --_hover-bg-color: var(
-        --hover-bg-color,
-        color-mix(in srgb, currentcolor 15%, transparent)
-      );
-      --_border-radius-small-em: var(--border-radius-small-em, 1em);
-      --_border-radius-small-percent: var(--border-radius-small-percent, 1em);
-      --_border-radius-large-vw: var(--border-radius-large-vw, 10000vw);
-      --_margin-small: var(--margin-small, 0.5em);
-
       display: flex;
       justify-content: flex-end;
     }
 
     .menu-button {
-      width: var(--_menu-button-size);
-      height: var(--_menu-button-size);
-      padding: 0.5em;
+      width: var(--_md-menu-button-size);
+      height: var(--_md-menu-button-size);
+      padding: var(--_md-padding-small);
+      border-radius: var(--_md-border-radius-small-em);
+
+      &:hover {
+        background-color: var(--_md-hover-bg-color);
+      }
     }
 
     #settings-dialog-wrapper {

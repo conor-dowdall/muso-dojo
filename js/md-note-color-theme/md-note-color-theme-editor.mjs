@@ -18,14 +18,14 @@ template.innerHTML = /* HTML */ `
 
     #template-area-wrapper {
       > label > h3 {
-        margin: margin: 0 0 var(--_margin-small) 0;
+        margin: margin: 0 0 var(--_md-margin-small) 0;
       }
     }
 
     #relative-wrapper {
       input[type="checkbox"] {
-        width: var(--_checkbox-size-large);
-        height: var(--_checkbox-size-large);
+        width: var(--_md-checkbox-size-large);
+        height: var(--_md-checkbox-size-large);
       }
 
       > #relative-input {
@@ -48,11 +48,13 @@ template.innerHTML = /* HTML */ `
       justify-content: end;
 
       > md-save-button {
-        width: var(--_menu-button-size);
-        height: var(--_menu-button-size);
+        width: var(--_md-menu-button-size-large);
+        height: var(--_md-menu-button-size-large);
+        border-radius: var(--_md-border-radius-small-em);
+        padding: var(--_md-padding-small);
 
         &:hover {
-          background-color: var(--_hover-bg-color);
+          background-color: var(--_md-hover-bg-color);
         }
       }
     }

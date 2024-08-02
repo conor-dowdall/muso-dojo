@@ -5,7 +5,7 @@ import "../md-fretboard-menu/md-fretboard-menu.mjs";
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
   <md-fretboard-menu></md-fretboard-menu>
-  <md-fretboard note-label="🟢"></md-fretboard>
+  <md-fretboard note-label="A"></md-fretboard>
 `;
 
 class MDFretboardMultitool extends MDInstrumentMultitool {

@@ -8,8 +8,8 @@ template.innerHTML = /* HTML */ `
     Hopefully, this class name is complicated enough
     to not be used or applied anywhere else! */
     .md-dialog-local-component-style {
-      padding: 0.75em;
-      border-radius: var(--_border-radius-small-em);
+      padding: var(--_md-padding-medium);
+      border-radius: var(--_md-border-radius-small-em);
 
       & h2 {
         text-align: center;
@@ -29,13 +29,13 @@ template.innerHTML = /* HTML */ `
         top: 0;
         margin-inline-start: auto;
         display: block;
-        width: var(--_menu-button-size-large);
-        height: var(--_menu-button-size-large);
-        border-radius: var(--_border-radius-small-percent);
-        padding: 0.3em;
+        width: var(--_md-menu-button-size-large);
+        height: var(--_md-menu-button-size-large);
+        border-radius: var(--_md-border-radius-small-em);
+        padding: var(--_md-padding-small);
 
         &:hover {
-          background-color: var(--_hover-bg-color);
+          background-color: var(--_md-hover-bg-color);
         }
       }
     }

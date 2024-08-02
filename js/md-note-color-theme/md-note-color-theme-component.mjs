@@ -11,12 +11,12 @@ template.innerHTML = /* HTML */ `
     }
 
     :host([editable]) input[type="checkbox"] {
-      width: var(--_checkbox-size-large);
-      height: var(--_checkbox-size-large);
+      width: var(--_md-checkbox-size-large);
+      height: var(--_md-checkbox-size-large);
     }
 
     #name-heading {
-      margin: margin: 0 0 var(--_margin-small) 0;
+      margin: margin: 0 0 var(--_md-margin-small) 0;
     }
 
     #note-colors-wrapper {
@@ -31,8 +31,8 @@ template.innerHTML = /* HTML */ `
         row-gap: 0.1em;
 
         > [id|="note-color-input"] {
-          width: var(--_menu-button-size-large);
-          height: var(--_menu-button-size-large);
+          width: var(--_md-menu-button-size-large);
+          height: var(--_md-menu-button-size-large);
         }
       }
     }

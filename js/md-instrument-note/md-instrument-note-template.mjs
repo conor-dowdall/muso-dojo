@@ -39,28 +39,26 @@ template.innerHTML = /* HTML */ `
       height: 100%;
 
       font-size: 31cqi;
-      /* 2.581 ~ = (100/31) * (80/100) */
+      2.581 ~ = (100/31) * (80/100)
       @container (aspect-ratio > 2.581/1) {
         font-size: 80cqb;
       }
 
-      --_text-color: white;
       --_shadow-size: 0.1em;
       --_shadow-blur: 0.2em;
-      --_shadow-color: black;
 
-      color: var(--_text-color);
+      color: var(--_md-text-color);
 
-      text-shadow: 0 0 0.2em var(--_shadow-color),
-        0 0 0.3em var(--_shadow-color),
+      text-shadow: 0 0 0.2em var(--_md-text-bg-color),
+        0 0 0.3em var(--_md-text-bg-color),
         var(--_shadow-size) var(--_shadow-size) var(--_shadow-blur)
-          var(--_shadow-color),
+          var(--_md-text-bg-color),
         var(--_shadow-size) calc(-1 * var(--_shadow-size)) var(--_shadow-blur)
-          var(--_shadow-color),
+          var(--_md-text-bg-color),
         calc(-1 * var(--_shadow-size)) var(--_shadow-size) var(--_shadow-blur)
-          var(--_shadow-color),
+          var(--_md-text-bg-color),
         calc(-1 * var(--_shadow-size)) calc(-1 * var(--_shadow-size))
-          var(--_shadow-blur) var(--_shadow-color);
+          var(--_shadow-blur) var(--_md-text-bg-color);
     }
   </style>
 
