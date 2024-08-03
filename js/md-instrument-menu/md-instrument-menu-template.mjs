@@ -16,7 +16,7 @@ template.innerHTML = /* HTML */ `
       width: var(--_md-menu-button-size);
       height: var(--_md-menu-button-size);
       padding: var(--_md-padding-small);
-      border-radius: var(--_md-border-radius-small-em);
+      border-radius: var(--_md-border-radius-small-percent);
 
       &:hover {
         background-color: var(--_md-hover-bg-color);

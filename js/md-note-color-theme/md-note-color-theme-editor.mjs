@@ -50,7 +50,7 @@ template.innerHTML = /* HTML */ `
       > md-save-button {
         width: var(--_md-menu-button-size-large);
         height: var(--_md-menu-button-size-large);
-        border-radius: var(--_md-border-radius-small-em);
+        border-radius: var(--_md-border-radius-small-percent);
         padding: var(--_md-padding-small);
 
         &:hover {

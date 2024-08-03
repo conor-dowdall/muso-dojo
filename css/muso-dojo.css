@@ -1,11 +1,12 @@
 :root {
   color-scheme: dark light;
 
-  --_md-text-bg-color: var(--md-text-bg-color, white);
-  --_md-text-color: var(--md-text-color, black);
+  --_md-text-bg-color: var(--md-text-bg-color, black);
+  --_md-text-color: var(--md-text-color, white);
   --_md-hover-bg-color: var(--md-hover-bg-color, rgb(50, 50, 50));
 
   --_md-border-radius-small-em: var(--md-border-radius-small-em, 1em);
+  --_md-border-radius-small-percent: var(--md-border-radius-small-em, 20%);
   --_md-border-radius-large-vw: var(--md-border-radius-large-vw, 10000vw);
 
   --_md-margin-small: var(--md-margin-small, 0.5em);
@@ -22,8 +23,8 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --md-text-bg-color: black;
-    --md-text-color: white;
+    --md-text-bg-color: white;
+    --md-text-color: black;
     --md-hover-bg-color: rgb(200, 200, 200);
   }
 }

@@ -14,7 +14,7 @@ template.innerHTML = /* HTML */ `
       position: absolute;
       width: 90%;
       height: 90%;
-      border-radius: 20%;
+      border-radius: var(--_md-border-radius-small-percent);
       --_md-note-color: var(--md-note-color, transparent);
       --_md-note-color-0: var(--md-note-color-0, var(--_md-note-color));
       --_md-note-color-1: var(--md-note-color-1, var(--_md-note-color));
