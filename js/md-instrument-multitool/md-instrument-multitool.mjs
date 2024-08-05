@@ -98,6 +98,7 @@ class MDInstrumentMultitool extends HTMLElement {
    * in the detail property of the event.
    */
   #handlePropChangeEvent(event) {
+    console.log("md-prop-change event recevied in instrument multitool");
     /** handle special case for resize prop change */
     if (event.detail.name === "resize") {
       if (event.detail.value === true) {

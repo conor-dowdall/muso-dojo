@@ -1,4 +1,4 @@
-import "../md-note-color-theme/md-note-color-theme-picker.mjs";
+import "../md-note-color/md-note-color-interface.mjs";
 import "../md-element/md-button/md-palette-button.mjs";
 import "../md-element/md-button/md-resize-button.mjs";
 import "../md-element/md-button/md-settings-button.mjs";
@@ -46,7 +46,7 @@ template.innerHTML = /* HTML */ `
     class="menu-button"
   ></md-palette-button>
   <dialog is="md-dialog" id="note-color-theme-dialog">
-    <md-note-color-theme-picker></md-note-color-theme-picker>
+    <md-note-color-interface></md-note-color-interface>
   </dialog>
 
   <!-- resize button -->

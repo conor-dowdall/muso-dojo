@@ -76,7 +76,11 @@ class MDInstrumentMenu extends HTMLElement {
    * @param {string|boolean} value - the value of the prop that changed
    */
   #mdPropChange(name, value) {
-    console.log("mdPropChange", name, value);
+    console.log(
+      "md-prop-change event emitted from instrument menu:",
+      name,
+      value
+    );
     this.dispatchEvent(
       new CustomEvent("md-prop-change", {
         bubbles: true,

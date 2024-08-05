@@ -166,6 +166,12 @@ class MDNoteColorThemeEditor extends HTMLElement {
       "mdNoteColorThemes",
       JSON.stringify(localNoteColorThemesObj)
     );
+
+    this.dispatchEvent(
+      new CustomEvent("md-save-note-color-theme", {
+        bubbles: true,
+      })
+    );
   }
 
   #handleRelativeChecked(event) {

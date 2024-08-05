@@ -2,7 +2,7 @@ import {
   mdAttributeToProperty,
   mdAttributeToBoolean,
 } from "../md-utilities/md-general-utilities.mjs";
-import { getNoteColorTheme } from "../md-note-color-theme/md-note-color-theme-utilities.mjs";
+import { getNoteColorTheme } from "../md-note-color/md-note-color-theme-utilities.mjs";
 
 /**
  * A base class that specific Muso Dojo instruments should inherit from,

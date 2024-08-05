@@ -1,4 +1,3 @@
-import MD_NOTE_COLOR_THEMES from "./md-note-color-themes.mjs";
 import MDNoteColorThemeComponent from "./md-note-color-theme-component.mjs";
 import "./md-note-color-theme-editor.mjs";
 import "../md-element/md-dialog.mjs";
@@ -11,7 +10,6 @@ template.innerHTML = /* HTML */ `
     #note-color-picker-wrapper {
       display: flex;
       flex-direction: row;
-      align-items: stretch;
       justify-content: center;
       column-gap: 2em;
       margin-block-end: 4em;
@@ -41,6 +39,11 @@ template.innerHTML = /* HTML */ `
           }
         }
       }
+    }
+
+    #note-color-theme-editor-option {
+      width: fit-content;
+      margin: 1.5em auto;
     }
 
     md-edit-button {
@@ -114,16 +117,17 @@ template.innerHTML = /* HTML */ `
 
   <h2>Note Color Theme</h2>
 
+  <div id="note-color-theme-editor-option" class="selectable-option">
+    <label>
+      <h3>Theme Editor</h3>
+      <md-edit-button></md-edit-button>
+      <dialog is="md-dialog" id="note-color-theme-dialog">
+        <md-note-color-theme-editor></md-note-color-theme-editor>
+      </dialog>
+    </label>
+  </div>
+
   <div id="note-color-theme-picker-wrapper">
-    <div id="note-color-theme" class="selectable-option">
-      <label>
-        <h3>Theme Editor</h3>
-        <md-edit-button></md-edit-button>
-        <dialog is="md-dialog" id="note-color-theme-dialog">
-          <md-note-color-theme-editor></md-note-color-theme-editor>
-        </dialog>
-      </label>
-    </div>
     <!-- programmatically add note-color-theme options here -->
   </div>
 `;
@@ -142,7 +146,7 @@ noteColorThemeTemplate.innerHTML = /* HTML */ `
   </div>
 `;
 
-class MDNoteColorThemePicker extends HTMLElement {
+class MDNoteColorInterface extends HTMLElement {
   constructor() {
     super();
     this.appendChild(template.content.cloneNode(true));
@@ -158,7 +162,9 @@ class MDNoteColorThemePicker extends HTMLElement {
     });
 
     // note color theme
-    const noteColorThemeEditorOption = this.querySelector("#note-color-theme");
+    const noteColorThemeEditorOption = this.querySelector(
+      "#note-color-theme-editor-option"
+    );
     const noteColorThemeEditorDialog = this.querySelector(
       "#note-color-theme-dialog"
     );
@@ -166,9 +172,20 @@ class MDNoteColorThemePicker extends HTMLElement {
       noteColorThemeEditorDialog.showModal();
     });
 
+    this.#populateNoteColorThemePickerWrapper();
+
+    this.addEventListener("md-save-note-color-theme", () => {
+      this.#populateNoteColorThemePickerWrapper();
+    });
+  }
+
+  #populateNoteColorThemePickerWrapper() {
     const noteColorThemePickerWrapper = this.querySelector(
       "#note-color-theme-picker-wrapper"
     );
+
+    noteColorThemePickerWrapper.replaceChildren();
+
     getNoteColorThemes().forEach((MD_NOTE_COLOR_THEME, index) => {
       noteColorThemePickerWrapper.append(
         this.#getNoteColorThemeOption(MD_NOTE_COLOR_THEME, index)
@@ -195,6 +212,6 @@ class MDNoteColorThemePicker extends HTMLElement {
   }
 }
 
-customElements.define("md-note-color-theme-picker", MDNoteColorThemePicker);
+customElements.define("md-note-color-interface", MDNoteColorInterface);
 
-export default MDNoteColorThemePicker;
+export default MDNoteColorInterface;
