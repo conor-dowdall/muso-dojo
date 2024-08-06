@@ -6,10 +6,14 @@
   --_md-hover-bg-color: var(--md-hover-bg-color, rgb(50, 50, 50));
 
   --_md-border-radius-small-em: var(--md-border-radius-small-em, 1em);
-  --_md-border-radius-small-percent: var(--md-border-radius-small-em, 20%);
+  --_md-border-radius-small-percent: var(--md-border-radius-small-percent, 20%);
   --_md-border-radius-large-vw: var(--md-border-radius-large-vw, 10000vw);
 
+  --_md-margin-xsmall: var(--md-margin-xsmall, 0.25em);
   --_md-margin-small: var(--md-margin-small, 0.5em);
+  --_md-margin-medium: var(--md-margin-medium, 0.75em);
+  --_md-margin-large: var(--md-margin-large, 1em);
+  --_md-margin-xlarge: var(--md-margin-xlarge, 2em);
 
   --_md-padding-small: var(--md-padding-small, 0.5em);
   --_md-padding-medium: var(--md-padding-medium, 0.75em);

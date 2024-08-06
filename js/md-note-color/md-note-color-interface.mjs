@@ -7,20 +7,25 @@ import { getNoteColorThemes } from "./md-note-color-theme-utilities.mjs";
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
   <style>
+    h2 {
+      text-align: center;
+    }
+
     #note-color-picker-wrapper {
       display: flex;
-      flex-direction: row;
       justify-content: center;
-      column-gap: 2em;
-      margin-block-end: 4em;
+      column-gap: var(--_md-margin-xlarge);
 
       > .note-color-radio-input-wrapper {
         display: flex;
-        flex-direction: row;
-        column-gap: 0.5em;
+        column-gap: var(--_md-margin-small);
 
         > #note-color-radio-input-none + label {
           line-height: var(--_md-menu-button-size-large);
+
+          > h3 {
+            margin: 0;
+          }
         }
 
         > #note-color-radio-input-color {
@@ -41,25 +46,31 @@ template.innerHTML = /* HTML */ `
       }
     }
 
-    #note-color-theme-editor-option {
-      width: fit-content;
-      margin: 1.5em auto;
+    #note-color-theme-heading {
+      margin-block-start: var(--_md-margin-xlarge);
     }
 
-    md-edit-button {
-      display: block;
-      margin-inline: auto;
-      margin-block-start: var(--_md-margin-small);
-      width: var(--_md-menu-button-size-large);
-      height: var(--_md-menu-button-size-large);
+    #note-color-theme-editor-option {
+      width: fit-content;
+      margin: var(--_md-margin-large) auto;
+
+      & h3 {
+        margin: 0 0 var(--_md-margin-small) 0;
+      }
+
+      & md-edit-button {
+        display: block;
+        margin-inline: auto;
+        width: var(--_md-menu-button-size-large);
+        height: var(--_md-menu-button-size-large);
+      }
     }
 
     #note-color-theme-picker-wrapper {
       display: flex;
       flex-direction: column;
       text-align: center;
-      align-items: center;
-      row-gap: 1.5em;
+      row-gap: var(--_md-margin-large);
     }
 
     .selectable-option {
@@ -115,7 +126,7 @@ template.innerHTML = /* HTML */ `
     </div>
   </div>
 
-  <h2>Note Color Theme</h2>
+  <h2 id="note-color-theme-heading">Note Color Theme</h2>
 
   <div id="note-color-theme-editor-option" class="selectable-option">
     <label>

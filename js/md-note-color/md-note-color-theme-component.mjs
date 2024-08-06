@@ -16,7 +16,8 @@ template.innerHTML = /* HTML */ `
     }
 
     #name-heading {
-      margin: margin: 0 0 var(--_md-margin-small) 0;
+      margin: 0 0 var(--_md-margin-small) 0;
+      text-align: center;
     }
 
     #note-colors-wrapper {

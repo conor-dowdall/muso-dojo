@@ -13,16 +13,19 @@ template.innerHTML = /* HTML */ `
     :host {
       display: flex;
       flex-direction: column;
-      gap: 1em;
+      gap: var(--_md-margin-large);
     }
 
     #template-area-wrapper {
-      > label > h3 {
-        margin: margin: 0 0 var(--_md-margin-small) 0;
+      text-align: center;
+
+      & h3 {
+        margin: 0 0 var(--_md-margin-xsmall) 0;
       }
     }
 
     #relative-wrapper {
+      text-align: center;
       input[type="checkbox"] {
         width: var(--_md-checkbox-size-large);
         height: var(--_md-checkbox-size-large);
@@ -39,7 +42,7 @@ template.innerHTML = /* HTML */ `
       }
 
       > #relative-info {
-        margin: 0.2em 0 0 0;
+        margin: var(--_md-margin-xsmall) 0 0 0;
       }
     }
 

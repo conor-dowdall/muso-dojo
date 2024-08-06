@@ -11,14 +11,6 @@ template.innerHTML = /* HTML */ `
       padding: var(--_md-padding-medium);
       border-radius: var(--_md-border-radius-small-em);
 
-      & h2 {
-        text-align: center;
-      }
-
-      & h3 {
-        margin: 0;
-      }
-
       &::backdrop {
         backdrop-filter: brightness(60%) contrast(60%);
       }
