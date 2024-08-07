@@ -101,23 +101,17 @@ class MDNoteColorThemeEditor extends HTMLElement {
       this.#mdNoteColorThemeComponent = themeComponent;
     else console.warn("md-note-color-theme-component cannot be found");
 
-    const themeSelect = /** @type {HTMLSelectElement | null} */ (
-      shadowRoot.getElementById("note-color-theme-select")
-    );
-
-    getNoteColorThemes().forEach((MD_NOTE_COLOR_THEME) => {
-      const themeOption = document.createElement("option");
-      themeOption.textContent = MD_NOTE_COLOR_THEME.name;
-      themeSelect?.appendChild(themeOption);
-    });
+    this.#populateThemeSelect();
 
     this.#mdNoteColorThemeComponent.mdNoteColorTheme = MD_NOTE_COLOR_THEMES[0];
     this.#mdNoteColorThemeComponent.name = "Custom Theme";
 
+    const themeSelect = /** @type {HTMLSelectElement | null} */ (
+      shadowRoot.getElementById("note-color-theme-select")
+    );
     const relativeInput = /** @type {HTMLInputElement | null} **/ (
       shadowRoot.getElementById("relative-input")
     );
-
     themeSelect?.addEventListener("change", () => {
       const theme = getNoteColorTheme(themeSelect.value);
       if (theme != null) {
@@ -128,16 +122,30 @@ class MDNoteColorThemeEditor extends HTMLElement {
           else
             console.warn("mdNoteColorThemeComponent.relative may be undefined");
         else console.warn("relative-input element cannot be found");
-      } else console.warn("unknown theme selected (somehow!)");
+      } else console.warn("unknown note color theme selected (somehow!)");
     });
 
-    relativeInput?.addEventListener("change", (event) =>
-      this.#handleRelativeChecked(event)
-    );
+    relativeInput?.addEventListener("change", (event) => {
+      this.#mdNoteColorThemeComponent.relative = relativeInput.checked;
+    });
 
     shadowRoot
       .querySelector("md-save-button")
       ?.addEventListener("click", () => this.#saveTheme());
+  }
+
+  #populateThemeSelect() {
+    const themeSelect = /** @type {HTMLSelectElement | null} */ (
+      this.shadowRoot?.getElementById("note-color-theme-select")
+    );
+    if (themeSelect != null) {
+      themeSelect.replaceChildren();
+      getNoteColorThemes().forEach((MD_NOTE_COLOR_THEME) => {
+        const themeOption = document.createElement("option");
+        themeOption.textContent = MD_NOTE_COLOR_THEME.name;
+        themeSelect.appendChild(themeOption);
+      });
+    } else console.warn("theme select element cannot be found");
   }
 
   #saveTheme() {
@@ -175,10 +183,8 @@ class MDNoteColorThemeEditor extends HTMLElement {
         bubbles: true,
       })
     );
-  }
 
-  #handleRelativeChecked(event) {
-    this.#mdNoteColorThemeComponent.relative = event.target.checked;
+    this.#populateThemeSelect();
   }
 }
 
