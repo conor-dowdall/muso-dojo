@@ -15,6 +15,7 @@
   --_md-margin-large: var(--md-margin-large, 1em);
   --_md-margin-xlarge: var(--md-margin-xlarge, 2em);
 
+  --_md-padding-xsmall: var(--md-padding-xsmall, 0.25em);
   --_md-padding-small: var(--md-padding-small, 0.5em);
   --_md-padding-medium: var(--md-padding-medium, 0.75em);
   --_md-padding-large: var(--md-padding-large, 1em);

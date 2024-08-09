@@ -132,7 +132,7 @@ template.innerHTML = /* HTML */ `
     <label>
       <h3>Theme Editor</h3>
       <md-edit-button></md-edit-button>
-      <dialog is="md-dialog" id="note-color-theme-dialog">
+      <dialog is="md-dialog" id="note-color-theme-editor-dialog">
         <md-note-color-theme-editor></md-note-color-theme-editor>
       </dialog>
     </label>
@@ -177,7 +177,7 @@ class MDNoteColorInterface extends HTMLElement {
       "#note-color-theme-editor-option"
     );
     const noteColorThemeEditorDialog = this.querySelector(
-      "#note-color-theme-dialog"
+      "#note-color-theme-editor-dialog"
     );
     noteColorThemeEditorOption.addEventListener("click", () => {
       noteColorThemeEditorDialog.showModal();

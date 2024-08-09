@@ -18,6 +18,12 @@ template.innerHTML = /* HTML */ `
     #name-heading {
       margin: 0 0 var(--_md-margin-small) 0;
       text-align: center;
+
+      &.editable {
+        padding: var(--_md-padding-xsmall);
+        border: 0.1em solid var(--_md-text-color);
+        border-radius: 0.25em;
+      }
     }
 
     #note-colors-wrapper {
@@ -155,8 +161,13 @@ class MDNoteColorThemeComponent extends HTMLElement {
   set #editable(value) {
     const nameHeading = this.shadowRoot?.getElementById("name-heading");
     if (nameHeading != null) {
-      if (value) nameHeading.contentEditable = "true";
-      else nameHeading.contentEditable = "false";
+      if (value) {
+        nameHeading.contentEditable = "true";
+        nameHeading.classList.add("editable");
+      } else {
+        nameHeading.contentEditable = "false";
+        nameHeading.classList.remove("editable");
+      }
     } else console.warn("name-heading element not found");
 
     const disabledInputs = this.shadowRoot?.querySelectorAll("input");
@@ -328,7 +339,7 @@ class MDNoteColorThemeComponent extends HTMLElement {
           noteColorInput.value = color;
         } else {
           noteCheckbox.checked = false;
-          noteColorInput.value = "";
+          noteColorInput.value = "#000000";
         }
       } else console.warn("note-color-input element not found");
     });
