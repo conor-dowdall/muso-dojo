@@ -3,9 +3,11 @@ import MDNoteColorThemeComponent from "./md-note-color-theme-component.mjs";
 import MD_NOTE_COLOR_THEMES from "./md-note-color-themes.mjs";
 import {
   getNoteColorTheme,
+  getNoteColorThemeFromLocalStorage,
   getNoteColorThemes,
 } from "./md-note-color-theme-utilities.mjs";
 import "../md-element/md-button/md-save-button.mjs";
+import "../md-element/md-button/md-delete-button.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
@@ -17,10 +19,29 @@ template.innerHTML = /* HTML */ `
     }
 
     #template-area-wrapper {
-      text-align: center;
+      #template-select-wrapper {
+        display: flex;
+        height: var(--_md-menu-button-size);
+        align-items: center;
+        justify-content: center;
+        gap: var(--_md-margin-small);
+      }
 
       & h3 {
+        text-align: center;
         margin: 0 0 var(--_md-margin-xsmall) 0;
+      }
+
+      & md-delete-button {
+        display: none;
+        width: var(--_md-menu-button-size);
+        height: var(--_md-menu-button-size);
+        border-radius: var(--_md-border-radius-small-percent);
+        padding: var(--_md-padding-small);
+
+        &:hover {
+          background-color: var(--_md-hover-bg-color);
+        }
       }
     }
 
@@ -65,10 +86,13 @@ template.innerHTML = /* HTML */ `
 
   <div id="template-area-wrapper">
     <label for="note-color-theme-select"><h3>Template</h3></label>
-    <select
-      name="note-color-theme-select"
-      id="note-color-theme-select"
-    ></select>
+    <div id="template-select-wrapper">
+      <select
+        name="note-color-theme-select"
+        id="note-color-theme-select"
+      ></select>
+      <md-delete-button></md-delete-button>
+    </div>
   </div>
 
   <md-note-color-theme-component editable></md-note-color-theme-component>
@@ -112,9 +136,21 @@ class MDNoteColorThemeEditor extends HTMLElement {
     const relativeInput = /** @type {HTMLInputElement | null} **/ (
       shadowRoot.getElementById("relative-input")
     );
+
     themeSelect?.addEventListener("change", () => {
       const theme = getNoteColorTheme(themeSelect.value);
       if (theme != null) {
+        const deleteThemeButton = /** @type {HTMLButtonElement | null} **/ (
+          shadowRoot.querySelector("md-delete-button")
+        );
+        if (deleteThemeButton != null) {
+          deleteThemeButton.style.display = getNoteColorThemeFromLocalStorage(
+            themeSelect.value
+          )
+            ? "inline-block"
+            : "none";
+        } else console.warn("delete-theme-button cannot be found");
+
         this.#mdNoteColorThemeComponent.mdNoteColorTheme = theme;
         if (relativeInput != null)
           if (this.#mdNoteColorThemeComponent.relative != null)
