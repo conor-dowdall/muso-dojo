@@ -1,6 +1,6 @@
 import "../md-note-color/md-note-color-interface.mjs";
 import "../md-element/md-button/md-palette-button.mjs";
-import "../md-element/md-button/md-resize-button.mjs";
+import "../md-element/md-button/md-resize-button-with-state.mjs";
 import "../md-element/md-button/md-settings-button.mjs";
 import "../md-element/md-dialog.mjs";
 
@@ -50,7 +50,9 @@ template.innerHTML = /* HTML */ `
   </dialog>
 
   <!-- resize button -->
-  <md-resize-button class="menu-button"></md-resize-button>
+  <md-resize-button-with-state
+    class="menu-button"
+  ></md-resize-button-with-state>
 
   <!-- settings button and dialog -->
   <md-settings-button

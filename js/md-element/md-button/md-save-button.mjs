@@ -1,4 +1,4 @@
-import MD_BUTTON_STYLE from "./md-button-style.mjs";
+import { MD_BUTTON_STYLE } from "../../../css/md-style-module.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
