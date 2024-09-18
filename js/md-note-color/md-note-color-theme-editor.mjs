@@ -8,6 +8,7 @@ import {
 } from "./md-note-color-theme-utilities.mjs";
 import "../md-element/md-button/md-save-button.mjs";
 import "../md-element/md-button/md-delete-button.mjs";
+import { MD_HOVER_STYLE_TEXT } from "../md-css/md-css-module.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
@@ -36,12 +37,7 @@ template.innerHTML = /* HTML */ `
         display: none;
         width: var(--_md-menu-button-size);
         height: var(--_md-menu-button-size);
-        border-radius: var(--_md-border-radius-small-percent);
-        padding: var(--_md-padding-small);
-
-        &:hover {
-          background-color: var(--_md-hover-bg-color);
-        }
+        ${MD_HOVER_STYLE_TEXT}
       }
     }
 
@@ -74,12 +70,7 @@ template.innerHTML = /* HTML */ `
       > md-save-button {
         width: var(--_md-menu-button-size-large);
         height: var(--_md-menu-button-size-large);
-        border-radius: var(--_md-border-radius-small-percent);
-        padding: var(--_md-padding-small);
-
-        &:hover {
-          background-color: var(--_md-hover-bg-color);
-        }
+        ${MD_HOVER_STYLE_TEXT}
       }
     }
   </style>

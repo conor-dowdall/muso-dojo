@@ -15,13 +15,11 @@ button {
   }
 `;
 
-export const MD_HOVER_STYLE = /* CSS */ `
-  .md-hover {
-    border-radius: var(--_md-border-radius-small-percent);
-    padding: var(--_md-padding-small);
+export const MD_HOVER_STYLE_TEXT = `
+  border-radius: var(--_md-border-radius-small-percent);
+  padding: var(--_md-padding-small);
 
-    &:hover {
-      background-color: var(--_md-hover-bg-color);
-    }
+  &:hover {
+    background-color: var(--_md-hover-bg-color);
   }
 `;
