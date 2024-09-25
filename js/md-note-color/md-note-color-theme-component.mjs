@@ -38,8 +38,8 @@ template.innerHTML = /* HTML */ `
         row-gap: 0.1em;
 
         > [id|="note-color-input"] {
-          width: var(--_md-menu-button-size-large);
-          height: var(--_md-menu-button-size-large);
+          width: var(--_md-menu-button-size);
+          height: var(--_md-menu-button-size);
         }
       }
     }

@@ -3,7 +3,6 @@ import "../md-element/md-button/md-palette-button.mjs";
 import "../md-element/md-button/md-resize-button-with-state.mjs";
 import "../md-element/md-button/md-settings-button.mjs";
 import "../md-element/md-dialog.mjs";
-import { MD_HOVER_STYLE_TEXT } from "../md-css/md-css-module.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
@@ -16,7 +15,6 @@ template.innerHTML = /* HTML */ `
     .menu-button {
       width: var(--_md-menu-button-size);
       height: var(--_md-menu-button-size);
-      ${MD_HOVER_STYLE_TEXT}
     }
 
     #settings-dialog-wrapper {

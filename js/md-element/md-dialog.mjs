@@ -1,5 +1,4 @@
 import "./md-button/md-close-button.mjs";
-import { MD_HOVER_STYLE_TEXT } from "../md-css/md-css-module.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
@@ -24,7 +23,6 @@ template.innerHTML = /* HTML */ `
         display: block;
         width: var(--_md-menu-button-size-large);
         height: var(--_md-menu-button-size-large);
-        ${MD_HOVER_STYLE_TEXT}
       }
     }
   </style>

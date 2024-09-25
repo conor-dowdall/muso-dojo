@@ -3,7 +3,7 @@ import "./md-note-color-theme-editor.mjs";
 import "../md-element/md-dialog.mjs";
 import "../md-element/md-button/md-edit-button.mjs";
 import { getNoteColorThemes } from "./md-note-color-theme-utilities.mjs";
-import { MD_HOVER_STYLE_TEXT } from "../md-css/md-css-module.mjs";
+import { MD_SELECTABLE_OPTION } from "../md-css/md-css-module.mjs";
 
 const template = document.createElement("template");
 template.innerHTML = /* HTML */ `
@@ -74,21 +74,7 @@ template.innerHTML = /* HTML */ `
       row-gap: var(--_md-margin-large);
     }
 
-    .selectable-option {
-      > label {
-        display: block;
-        border: 0.1em solid;
-
-        ${MD_HOVER_STYLE_TEXT}
-        /* override some md-hover-style css */
-        border-radius: var(--_md-border-radius-small-em);
-        padding: var(--_md-padding-large);
-      }
-
-      > input:checked + label {
-        background-color: var(--_md-hover-bg-color);
-      }
-    }
+    ${MD_SELECTABLE_OPTION}
   </style>
 
   <h2>Default Note Color</h2>

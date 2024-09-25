@@ -20,8 +20,8 @@
   --_md-padding-medium: var(--md-padding-medium, 0.75em);
   --_md-padding-large: var(--md-padding-large, 1em);
 
-  --_md-menu-button-size: var(--md-menu-button-size, 2em);
-  --_md-menu-button-size-large: var(--md-menu-button-size-large, 2.5em);
+  --_md-menu-button-size: var(--md-menu-button-size, 2.5em);
+  --_md-menu-button-size-large: var(--md-menu-button-size-large, 3.5em);
 
   --_md-checkbox-size-large: var(--md-checkbox-size-large, 1.5em);
 }
